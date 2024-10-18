@@ -2,10 +2,21 @@ name: Automate Invitation
 
 on:
   issues:
-    types: [labeled]
+    types: [opened]
 
 jobs:
+  auto_label_issue:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Label Issue as 'invite me to the community'
+        uses: actions-ecosystem/action-add-labels@v1
+        with:
+          github_token: ${{ secrets.INVITE_TOKEN }}
+          labels: 'invite me to the community'
+
   handle_label:
+    needs: auto_label_issue
     runs-on: ubuntu-latest
 
     steps:
